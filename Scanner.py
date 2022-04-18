@@ -1,7 +1,12 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QFileDialog, QTableWidgetItem, QMessageBox, QAbstractItemView
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton
+import copy
 
+from PyQt5 import QtCore, QtGui, QtWidgets, QtWebEngineWidgets
+from New import get_tokens_list
+from animated import tiny_transitions, G
 tokens = []
 
 token = {
@@ -160,6 +165,7 @@ class Ui_Form(object):
         self.textEdit.setObjectName("textEdit")
         self.verticalLayout.addWidget(self.textEdit)
         self.pushButton = QtWidgets.QPushButton(Form)
+        self.pushButton5 = QtWidgets.QPushButton(Form)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -168,6 +174,10 @@ class Ui_Form(object):
         self.pushButton.setMaximumSize(QtCore.QSize(16777215, 50))
         self.pushButton.setObjectName("pushButton")
         self.verticalLayout.addWidget(self.pushButton)
+        self.pushButton5.setSizePolicy(sizePolicy)
+        self.pushButton5.setMaximumSize(QtCore.QSize(16777215, 50))
+        self.pushButton5.setObjectName("pushButton5")
+        self.verticalLayout.addWidget(self.pushButton5)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.label = QtWidgets.QLabel(Form)
@@ -223,8 +233,7 @@ class Ui_Form(object):
         self.textEdit.setPlaceholderText(_translate("Form", "Write Code here..."))
         self.pushButton.setText(_translate("Form", "Scan Code"))
         self.pushButton.setShortcut(_translate("Form", "Return"))
-
-
+        self.pushButton5.setText(_translate("Form", "Check with REGEX"))
 
 
 
@@ -284,6 +293,58 @@ class Ui_Form(object):
             cell.setTextAlignment(Qt.AlignCenter)
             row += 1
 
+
+def onClickTokenize(self):
+    input_code = str(self.textEdit.toPlainText())
+    self.G = copy.deepcopy(G)
+    self.tokens = self.get_tokens_tabledata(input_code)
+
+    self.label_4.hide()
+    G.save_graph("DFA.html")
+    self.webEngineView.load(QtCore.QUrl.fromLocalFile("\DFA.html"))
+    self.webEngineView.show()
+    self.toolButton.setDisabled(False)
+    self.tableWidget.setRowCount(len(self.tokens))
+    self.n = 0
+        # row = 0
+        # for token in self.tokens:
+        #     self.tableWidget.setItem(row, 0, QtWidgets.QTableWidgetItem(token["token"]))
+        #     self.tableWidget.setItem(row, 1, QtWidgets.QTableWidgetItem(token["type"]))
+        #     self.tableWidget.setItem(row, 2, QtWidgets.QTableWidgetItem(token["current"]))
+        #     self.tableWidget.setItem(row, 3, QtWidgets.QTableWidgetItem(token["next"]))
+        #     row = row + 1
+
+    def get_tokens_tabledata(self, input_code):
+        tokens_list = get_tokens_list(input_code)
+
+        current = '1'
+        for token in tokens_list:
+            token["current"] = current
+
+            next = tiny_transitions[current][token["type"]]
+            token["next"] = next
+            current = next
+        return tokens_list
+
+    def OnClickNextState(self):
+        if self.n < len(self.tokens):
+            token = self.tokens[self.n]
+            self.tableWidget.setItem(self.n, 0, QtWidgets.QTableWidgetItem(token["token"]))
+            self.tableWidget.setItem(self.n, 1, QtWidgets.QTableWidgetItem(token["type"]))
+            self.tableWidget.setItem(self.n, 2, QtWidgets.QTableWidgetItem(token["current"]))
+            self.tableWidget.setItem(self.n, 3, QtWidgets.QTableWidgetItem(token["next"]))
+            self.G.nodes[int(token["current"]) - 1]["color"] = 'red'
+            self.G.nodes[int(token["next"]) - 1]["color"] = {"background": 'indigo', "border": 'purple'}
+            self.G.save_graph("animated.html")
+            self.redisplayDFA()
+        else:
+            self.G.nodes[int(self.tokens[-1]["next"]) - 1]["color"] = {"background": 'lime', "border": 'blue'}
+            self.G.save_graph("DFA.html")
+            self.redisplayDFA()
+            self.toolButton.setDisabled(True)
+            #self.toolButton.setText("Repeat?")
+            #self.n = 0
+        self.n = self.n + 1
 
 if __name__ == "__main__":
     import sys

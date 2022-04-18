@@ -4,9 +4,6 @@ import pandas as pd
 import numpy as np
 
 G = nx.DiGraph()
-
-
-
 G.add_node(1)
 G.add_node(2)
 G.add_node(3)
@@ -25,12 +22,6 @@ labels = {(1,2):'REPEAT', (2,3):'ID',(3,4):':=', (4,5):'ID|NUM',(5,6):';', (6,7)
           (1, 11): '~REPEAT', (2, 11): '~ID', (3, 11): '~(:=)', (4, 11): '~(ID|NUM)', (5, 11): '~;', (6, 11): '~UNTILL',
           (7, 11): '~ID', (8, 11): '~(:=)', (9, 11): '~(ID|NUM)'
           }
-
-
-
-
-
-
 
 pos=nx.circular_layout(G)
 nx.draw(G, pos,with_labels=True,node_size=700,node_color='red')

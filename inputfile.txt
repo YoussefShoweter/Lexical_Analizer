@@ -1,1 +1,2 @@
-REPEAT x := 5;y := x; UNTIL x = 5
+REPEAT x=x5
+
