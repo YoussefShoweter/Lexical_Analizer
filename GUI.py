@@ -2,7 +2,7 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
-
+#STATIC DFA --UNUSED--
 G = nx.DiGraph()
 G.add_node(1)
 G.add_node(2)
