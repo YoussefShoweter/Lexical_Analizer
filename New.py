@@ -6,11 +6,8 @@ from pyvis.network import Network
 
 from dfa import DFA
 
-def get_tokens_list(input_code):
-    NUM = "[0-9]+"
-    ID = "([a-z]|[A-Z])+"
-    REGEX = f"(REPEAT\s*({ID}\s*:=\s*(({ID}|{NUM})\s*;\s*))+\s*UNTIL\s*({ID}\s*=\s*({ID}|{NUM})\s*))"
-    # rekt = re.fullmatch(REGEX, input_code)
+def Obtain_Tokens_from_text(input_code):
+
     tokens_list = []
     tokens = re.findall('REPEAT|[0-9]+|UNTIL|[_a-zA-Z][_a-zA-Z0-9]*|:=|;|=', input_code)
     for token in tokens:

@@ -24,7 +24,7 @@ labels = {(1,2):'REPEAT', (2,3):'ID',(3,4):':=', (4,5):'ID|NUM',(5,6):';', (6,7)
           }
 
 pos=nx.circular_layout(G)
-nx.draw(G, pos,with_labels=True,node_size=700,node_color='red')
+nx.draw(G, pos,with_labels=True,node_size=900,node_color='red')
 nx.draw_networkx_edge_labels(G,pos,edge_labels=labels,font_size=9)
 
 G.edges(data=True)
