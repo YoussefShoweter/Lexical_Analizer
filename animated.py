@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from pyvis.network import Network
 from dfa import DFA
 
-Accepted_token = {'REPEAT', 'NUM', 'UNTIL', 'ID', ';', ':=','='}
+Accepted_token = {'REPEAT', 'NUM', 'UNTIL', 'ID', ';', ':=','=','<','>','>=','<='}
 Token_transitions = {
     '1': {'REPEAT': '2'},
     '2': {'ID': '3'},
@@ -11,8 +11,8 @@ Token_transitions = {
     '4': {'ID': '5','NUM':'5'},
     '5': {';': '6'},
     '6': {'UNTIL': '7','ID':'3'},
-    '7': {'ID': '8'},
-    '8': { '=': '9'},
+    '7': {'ID': '8','NUM':'8'},
+    '8': { '=': '9','<=': '9','>=': '9','<': '9','>': '9'},
     '9': {'ID': '10', 'NUM': '10'},
     '10': {},
     '11': {},
@@ -38,8 +38,8 @@ node_pos = {
     '6': (550, 260),
     '7': (700, 200),
     '8': (800, 200),
-    '9': (900, 200),
-    '10': (1000, 200),
+    '9': (900, 160),
+    '10': (1000, 240),
     '11':(600,380),
 
 }

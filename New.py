@@ -9,7 +9,7 @@ from dfa import DFA
 def Obtain_Tokens_from_text(input_code):
 
     tokens_list = []
-    tokens = re.findall('REPEAT|[0-9]+|UNTIL|[_a-zA-Z][_a-zA-Z0-9]*|:=|;|=', input_code)
+    tokens = re.findall('REPEAT|[0-9]+|UNTIL|[_a-zA-Z][_a-zA-Z0-9]*|:=|;|=|>|<|<=|=>', input_code)
     for token in tokens:
         if token == "REPEAT":
             tokens_list.append({"token": token, "type": "REPEAT"})
@@ -17,8 +17,14 @@ def Obtain_Tokens_from_text(input_code):
             tokens_list.append({"token": token, "type": "UNTIL"})
         elif token == ":=":
             tokens_list.append({"token": token, "type": ":="})
-        elif token == "=":
-            tokens_list.append({"token": token, "type": "="})
+        elif token == "=>":
+            tokens_list.append({"token": token, "type": ">="})
+        elif token == "<=":
+            tokens_list.append({"token": token, "type": "<="})
+        elif token == "<":
+            tokens_list.append({"token": token, "type": "<"})
+        elif token == ">":
+            tokens_list.append({"token": token, "type": ">"})
         elif token == ";":
             tokens_list.append({"token": token, "type": ";"})
         elif re.search("[0-9]+", token) is not None:
@@ -36,9 +42,9 @@ def Obtain_Tokens_from_text(input_code):
 def check(input_code):
     NUM = "[0-9]+"
     ID = "[_a-zA-Z]\w*"
-    REGEX = f"(REPEAT\s*({ID}\s*:=\s*(({ID}|{NUM})\s*;\s*))+\s*UNTIL\s*({ID}\s*=\s*({ID}|{NUM})\s*))"
+    REGEX = f"(REPEAT\s*({ID}\s*:=\s*(({ID}|{NUM})\s*;\s*))+\s*UNTIL\s*({ID}|{NUM}\s*(=|>|<|=>|<=)\s*({ID}|{NUM})\s*))"
     rekt = re.fullmatch(REGEX, input_code)
     if rekt is None:
-        return "Wrong Syntax of Repeat Untill Statement"
+        return "Unaccepted ...Wrong Syntax "
     else:
-        return "Correct Syntax Match"
+        return "ACCEPTED  ...Correct Syntax"

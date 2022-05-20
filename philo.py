@@ -5,7 +5,7 @@ from New import Obtain_Tokens_from_text
 import  New
 from animated import Token_transitions, G
 
-
+#REPEAT x:=m;x:=3;UNTIL z=9
 
 class Ui_philo(object):
     def setupUi(self, philo):
@@ -165,13 +165,14 @@ class Ui_philo(object):
     def TransfertoTokens(self):
 
         input_code = str(self.textEdit.toPlainText())
-        if New.check(input_code) =="Correct Syntax Match":
-
+        if New.check(input_code) =="ACCEPTED  ...Correct Syntax":
             self.regexLabel.setStyleSheet("QLabel{font-size: 11pt;color:green;}")
 
         else:
-
             self.regexLabel.setStyleSheet("QLabel{font-size: 11pt;color:red;}" )
+            # if New.within(input_code)==False:
+            #     self.webEngineView.close()
+
         self.regexLabel.setText(New.check(input_code))
         self.G = copy.deepcopy(G)
         self.tokens = self.Table_view_Tokens(input_code)

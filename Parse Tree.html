@@ -1,0 +1,80 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vis-network@latest/styles/vis-network.css" type="text/css" />
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vis-network@latest/dist/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 100%;
+            height: 100%;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"group": "terminal", "id": "de062f75-c87d-4a90-80d5-760db52abd13", "label": "if", "shape": "text"}, {"group": "terminal", "id": "1dedb837-17c1-4589-9bac-7058dff95170", "label": "NUM", "shape": "text"}, {"group": "terminal", "id": "a5a44fab-3ba2-4fe3-a68d-40ffb6271c77", "label": "then", "shape": "text"}, {"group": "terminal", "id": "a3b9f02e-0308-48c9-800a-58150f9907ec", "label": "if", "shape": "text"}, {"group": "terminal", "id": "a5d0133e-6552-414a-b6dd-1c1c99552973", "label": "NUM", "shape": "text"}, {"group": "terminal", "id": "40e1f9ae-34e2-4002-8bed-a2e0d74cf469", "label": "then", "shape": "text"}, {"group": "terminal", "id": "54246541-dd9e-4248-a3c5-7baf35f008a9", "label": "ID", "shape": "text"}, {"group": "terminal", "id": "44a71b74-dd8c-4422-9834-c07580314b8f", "label": ":=", "shape": "text"}, {"group": "terminal", "id": "21b0ed5a-3c1c-4c97-85ac-9a433c74f39c", "label": "NUM", "shape": "text"}, {"group": "non-terminal", "id": "0a500ead-aecb-4d60-9321-5d202b98b012", "label": "factor", "shape": "text"}, {"group": "terminal", "id": "8151b3a0-a3c5-4ac4-aca9-e761fbec651f", "label": ";", "shape": "text"}, {"group": "non-terminal", "id": "10baa640-51a6-4d45-ad46-c889ff95836e", "label": "assign-stmt", "shape": "text"}, {"group": "non-terminal", "id": "21cec199-d4cd-41d5-a074-db4dc87f6549", "label": "statement", "shape": "text"}, {"group": "non-terminal", "id": "a2b311b3-776e-478c-bf18-44008f122bad", "label": "stmt-seq", "shape": "text"}, {"group": "terminal", "id": "be3a8394-a040-4b93-bc2b-f1800bd795f2", "label": "ID", "shape": "text"}, {"group": "terminal", "id": "9bc3e444-3371-4520-9189-716004901f5a", "label": ":=", "shape": "text"}, {"group": "terminal", "id": "9f6031e0-3668-49e6-97d1-eafdc7e4ffa5", "label": "ID", "shape": "text"}, {"group": "non-terminal", "id": "0eee6fb0-538a-488c-a0c0-db265652a90b", "label": "factor", "shape": "text"}, {"group": "terminal", "id": "e1a485c0-07a5-4988-be54-f7b8e2262ad9", "label": ";", "shape": "text"}, {"group": "non-terminal", "id": "e70971f0-44bc-4ded-aa74-684a0a4db6f0", "label": "assign-stmt", "shape": "text"}, {"group": "non-terminal", "id": "cfe8e3d8-1d45-4894-b585-b43031685451", "label": "statement", "shape": "text"}, {"group": "non-terminal", "id": "fc9d4a6e-224b-4221-b6c2-5f28d991d880", "label": "stmt-seq", "shape": "text"}, {"group": "terminal", "id": "f030e73a-d8cc-4f44-a012-e1dcd88a878b", "label": "end", "shape": "text"}, {"group": "non-terminal", "id": "e8664656-eab3-4942-a808-4021789e8302", "label": "if-stmt", "shape": "text"}, {"group": "non-terminal", "id": "24341abb-2104-4bab-b0a2-6c57d69c2d4b", "label": "statement", "shape": "text"}, {"group": "non-terminal", "id": "adfa8526-94a1-4258-8e7c-41f5bad4dfb8", "label": "stmt-seq", "shape": "text"}, {"group": "terminal", "id": "50ff42c8-e84f-4081-ac3b-6e95f5e7a345", "label": "ID", "shape": "text"}, {"group": "terminal", "id": "8bf4b6a5-0531-480e-b1ba-f699ff901539", "label": ":=", "shape": "text"}, {"group": "terminal", "id": "70475f27-e3ed-4431-bc35-fe2a1040b755", "label": "NUM", "shape": "text"}, {"group": "non-terminal", "id": "535245b7-7f64-4394-9048-9cc5edaae299", "label": "factor", "shape": "text"}, {"group": "terminal", "id": "eaa4dfbe-4a5f-4350-89e3-c925f998c0e7", "label": ";", "shape": "text"}, {"group": "non-terminal", "id": "d5231380-0a1b-4e64-b077-05e65be8f849", "label": "assign-stmt", "shape": "text"}, {"group": "non-terminal", "id": "6e636215-44dc-4e23-adc5-85f4fa479ef0", "label": "statement", "shape": "text"}, {"group": "non-terminal", "id": "e85e1c99-a171-4742-961a-6b3b651441a1", "label": "stmt-seq", "shape": "text"}, {"group": "terminal", "id": "6d51fe97-5309-43ee-8452-fb8cf531951b", "label": "end", "shape": "text"}, {"group": "non-terminal", "id": "6c5633c2-f601-4fc5-83b6-796a7348ef66", "label": "if-stmt", "shape": "text"}, {"group": "non-terminal", "id": "66bd3105-0e34-4a2b-9029-788ebb21a280", "label": "statement", "shape": "text"}, {"group": "non-terminal", "id": "f827ba34-b34e-4a1c-8bad-38afb4407041", "label": "stmt-seq", "shape": "text"}, {"group": "non-terminal", "id": "dd21fb54-6f05-41e9-b913-0ea6d6c95f2b", "label": "s\u0027", "shape": "text"}]);
+        edges = new vis.DataSet([{"arrows": "to", "from": "0a500ead-aecb-4d60-9321-5d202b98b012", "to": "21b0ed5a-3c1c-4c97-85ac-9a433c74f39c"}, {"arrows": "to", "from": "10baa640-51a6-4d45-ad46-c889ff95836e", "to": "54246541-dd9e-4248-a3c5-7baf35f008a9"}, {"arrows": "to", "from": "10baa640-51a6-4d45-ad46-c889ff95836e", "to": "44a71b74-dd8c-4422-9834-c07580314b8f"}, {"arrows": "to", "from": "10baa640-51a6-4d45-ad46-c889ff95836e", "to": "0a500ead-aecb-4d60-9321-5d202b98b012"}, {"arrows": "to", "from": "10baa640-51a6-4d45-ad46-c889ff95836e", "to": "8151b3a0-a3c5-4ac4-aca9-e761fbec651f"}, {"arrows": "to", "from": "21cec199-d4cd-41d5-a074-db4dc87f6549", "to": "10baa640-51a6-4d45-ad46-c889ff95836e"}, {"arrows": "to", "from": "a2b311b3-776e-478c-bf18-44008f122bad", "to": "21cec199-d4cd-41d5-a074-db4dc87f6549"}, {"arrows": "to", "from": "0eee6fb0-538a-488c-a0c0-db265652a90b", "to": "9f6031e0-3668-49e6-97d1-eafdc7e4ffa5"}, {"arrows": "to", "from": "e70971f0-44bc-4ded-aa74-684a0a4db6f0", "to": "be3a8394-a040-4b93-bc2b-f1800bd795f2"}, {"arrows": "to", "from": "e70971f0-44bc-4ded-aa74-684a0a4db6f0", "to": "9bc3e444-3371-4520-9189-716004901f5a"}, {"arrows": "to", "from": "e70971f0-44bc-4ded-aa74-684a0a4db6f0", "to": "0eee6fb0-538a-488c-a0c0-db265652a90b"}, {"arrows": "to", "from": "e70971f0-44bc-4ded-aa74-684a0a4db6f0", "to": "e1a485c0-07a5-4988-be54-f7b8e2262ad9"}, {"arrows": "to", "from": "cfe8e3d8-1d45-4894-b585-b43031685451", "to": "e70971f0-44bc-4ded-aa74-684a0a4db6f0"}, {"arrows": "to", "from": "fc9d4a6e-224b-4221-b6c2-5f28d991d880", "to": "a2b311b3-776e-478c-bf18-44008f122bad"}, {"arrows": "to", "from": "fc9d4a6e-224b-4221-b6c2-5f28d991d880", "to": "cfe8e3d8-1d45-4894-b585-b43031685451"}, {"arrows": "to", "from": "e8664656-eab3-4942-a808-4021789e8302", "to": "a3b9f02e-0308-48c9-800a-58150f9907ec"}, {"arrows": "to", "from": "e8664656-eab3-4942-a808-4021789e8302", "to": "a5d0133e-6552-414a-b6dd-1c1c99552973"}, {"arrows": "to", "from": "e8664656-eab3-4942-a808-4021789e8302", "to": "40e1f9ae-34e2-4002-8bed-a2e0d74cf469"}, {"arrows": "to", "from": "e8664656-eab3-4942-a808-4021789e8302", "to": "fc9d4a6e-224b-4221-b6c2-5f28d991d880"}, {"arrows": "to", "from": "e8664656-eab3-4942-a808-4021789e8302", "to": "f030e73a-d8cc-4f44-a012-e1dcd88a878b"}, {"arrows": "to", "from": "24341abb-2104-4bab-b0a2-6c57d69c2d4b", "to": "e8664656-eab3-4942-a808-4021789e8302"}, {"arrows": "to", "from": "adfa8526-94a1-4258-8e7c-41f5bad4dfb8", "to": "24341abb-2104-4bab-b0a2-6c57d69c2d4b"}, {"arrows": "to", "from": "535245b7-7f64-4394-9048-9cc5edaae299", "to": "70475f27-e3ed-4431-bc35-fe2a1040b755"}, {"arrows": "to", "from": "d5231380-0a1b-4e64-b077-05e65be8f849", "to": "50ff42c8-e84f-4081-ac3b-6e95f5e7a345"}, {"arrows": "to", "from": "d5231380-0a1b-4e64-b077-05e65be8f849", "to": "8bf4b6a5-0531-480e-b1ba-f699ff901539"}, {"arrows": "to", "from": "d5231380-0a1b-4e64-b077-05e65be8f849", "to": "535245b7-7f64-4394-9048-9cc5edaae299"}, {"arrows": "to", "from": "d5231380-0a1b-4e64-b077-05e65be8f849", "to": "eaa4dfbe-4a5f-4350-89e3-c925f998c0e7"}, {"arrows": "to", "from": "6e636215-44dc-4e23-adc5-85f4fa479ef0", "to": "d5231380-0a1b-4e64-b077-05e65be8f849"}, {"arrows": "to", "from": "e85e1c99-a171-4742-961a-6b3b651441a1", "to": "adfa8526-94a1-4258-8e7c-41f5bad4dfb8"}, {"arrows": "to", "from": "e85e1c99-a171-4742-961a-6b3b651441a1", "to": "6e636215-44dc-4e23-adc5-85f4fa479ef0"}, {"arrows": "to", "from": "6c5633c2-f601-4fc5-83b6-796a7348ef66", "to": "de062f75-c87d-4a90-80d5-760db52abd13"}, {"arrows": "to", "from": "6c5633c2-f601-4fc5-83b6-796a7348ef66", "to": "1dedb837-17c1-4589-9bac-7058dff95170"}, {"arrows": "to", "from": "6c5633c2-f601-4fc5-83b6-796a7348ef66", "to": "a5a44fab-3ba2-4fe3-a68d-40ffb6271c77"}, {"arrows": "to", "from": "6c5633c2-f601-4fc5-83b6-796a7348ef66", "to": "e85e1c99-a171-4742-961a-6b3b651441a1"}, {"arrows": "to", "from": "6c5633c2-f601-4fc5-83b6-796a7348ef66", "to": "6d51fe97-5309-43ee-8452-fb8cf531951b"}, {"arrows": "to", "from": "66bd3105-0e34-4a2b-9029-788ebb21a280", "to": "6c5633c2-f601-4fc5-83b6-796a7348ef66"}, {"arrows": "to", "from": "f827ba34-b34e-4a1c-8bad-38afb4407041", "to": "66bd3105-0e34-4a2b-9029-788ebb21a280"}, {"arrows": "to", "from": "dd21fb54-6f05-41e9-b913-0ea6d6c95f2b", "to": "f827ba34-b34e-4a1c-8bad-38afb4407041"}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {"nodes": {"color": "#03dac8", "shape": "text"}, "interaction": {"keyboard": {"enabled": true}, "navigationButtons": true}, "layout": {"hierarchical": {"sortMethod": "directed"}}, "groups": {"terminal": {"size": 50, "shape": "text", "font": {"color": "black"}}, "non-terminal": {"shape": "database", "font": {"color": "lime"}}}, "physics": {"enabled": true, "minVelocity": 0.75, "solver": "repulsion"}};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
