@@ -1,7 +1,7 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets,QtWebEngineWidgets
 import copy
-from New import Obtain_Tokens_from_text
+from New import Obtain_Tokens_from_text0
 import  New
 from animated import Token_transitions, G
 
@@ -205,7 +205,7 @@ class Ui_philo(object):
 
 
     def Table_view_Tokens(self, input_code):
-        tokens_list = Obtain_Tokens_from_text(input_code)
+        tokens_list = Obtain_Tokens_from_text0(input_code)
         if tokens_list is None:
             return None
         else:
@@ -223,6 +223,8 @@ class Ui_philo(object):
 
     def InteractiveDFA(self):
         self.webEngineView.close()
+        self.webEngineView.load(QtCore.QUrl.fromLocalFile("\\animated.html"))
+
         self.webEngineView.load(QtCore.QUrl.fromLocalFile("\\animated.html"))
         self.webEngineView.show()
 
